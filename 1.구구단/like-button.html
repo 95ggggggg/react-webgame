@@ -3,18 +3,24 @@
 </head>
 <body>
 <div id="root"></div>
-<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<!--<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>-->
-<!--<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>-->
+<!-- 개발 -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- 운영 -->
+<!--<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>-->
+<!--<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>-->
 <script>
   'use strict';
 
   const e = React.createElement;
 
+  // class 사용 - 23 년 기준 거의 사용하지 않음, 1 % 만 사용 -> ErrorBoundary
+  // 하단 블록 전체를 컴포넌트 라 지칭, 컴포넌트 = 데이터 + 화면
   class LikeButton extends React.Component {
     constructor(props) {
       super(props);
+      // 하단 this.state 가 데이터
+      // 화면 바뀌는 부분을 state 에 추가
       this.state = {liked: false};
     }
 
@@ -22,13 +28,31 @@
       if (this.state.liked) {
         return 'You liked this.';
       }
+      // 하단 return 이 화면
+      // React ver 17, 원시적인 형태
+      return React.createElement('button', {onClick: () => this.setState({liked: true})}, 'Like');
 
-      return e('button', {onClick: () => this.setState({liked: true})}, 'Like');
+      // return e('button', {onClick: () => this.setState({liked: true})}, 'Like');
     }
   }
+
+/*
+  // 화살표 함수 사용 -> 모르면 js 강의 듣기 (youtube - 인간 JS 엔진 되기 - ZeroCho TV)
+  const LikeButton = () => {
+
+  };
+  // 함수 사용
+  function LikeButton() {
+
+  }
+*/
+
 </script>
 <script>
-  ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+    // 하단 React ver 17
+    ReactDOM.render(React.createElement(LikeButton), document.querySelector('#root'));
+
+    // ReactDOM.render(e(LikeButton), document.querySelector('#root'));
 </script>
 </body>
 </html>
